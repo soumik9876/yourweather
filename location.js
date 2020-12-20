@@ -4,30 +4,6 @@ const success = (position) => {
 	long = position.coords.longitude;
 	console.log("called geolocation", lat, long);
 
-	// let address;
-	// fetch(
-	//     `https://us1.locationiq.com/v1/reverse.php?key=pk.e193b15d132399ec23bf976703433914&lat=${lat}&lon=${long}8&format=json`
-	// )
-	//     .then((response) => response.json())
-	//     .then((data) => {
-	//         address = data;
-	//         console.log(address);
-	//         console.log(data);
-	//     }
-	//     );
-	// fetch(
-	// 	`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=738952f7999eaeb9d5a1474457e4b67e&units=metric`
-	// )
-	// 	.then((response) => response.json())
-	// 	.then((data) => console.log(data))
-	// 	.catch((error) => alert("location error"));
-	// fetch(
-	// 	`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&appid=738952f7999eaeb9d5a1474457e4b67e&units=metric&exclude=hourly,minutely`
-	// )
-	// 	.then((response) => response.json())
-	// 	.then((data) => console.log(data))
-	// 	.catch((error) => alert("location error"));
-
 	// Get location key and city name from lat and long
 
 	let loc_detail = call_location_api();
@@ -55,6 +31,16 @@ const success = (position) => {
 	today_weather = JSON.parse(today_weather.responseText);
 	console.log(today_weather);
 	daily_condition(today_weather);
+	let hourly_weather = new XMLHttpRequest();
+	hourly_weather.open(
+		"GET",
+		`http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&metric=true&details=true`,
+		false
+	);
+	hourly_weather.send();
+	hourly_weather = JSON.parse(hourly_weather.responseText);
+	console.log(hourly_weather);
+	set_hourly_info(hourly_weather);
 	return;
 };
 
@@ -80,7 +66,7 @@ const call_location_api = () => {
 	loc_detail.send();
 	loc_detail = JSON.parse(loc_detail.responseText);
 	console.log(loc_detail);
-	document.querySelector("#address").innerText = loc_detail.EnglishName+','+loc_detail.Country.EnglishName;
+	document.querySelector("#address").innerText = loc_detail.EnglishName + ',' + loc_detail.Country.EnglishName;
 	return loc_detail;
 };
 
@@ -90,11 +76,16 @@ const set_cur_condition = (cur_weather) => {
 	let dayname = days[curdate.getDay()],
 		hour = curdate.getHours(),
 		min = curdate.getMinutes();
-	if (hour > 12) hour -= 12;
+	let ap;
+	if (hour >= 12) {
+		ap = " PM";
+		hour -= 12;
+	}
+	else ap = " AM";
+	if (hour == 0) hour += 12;
 	if (min < 10) min = `0${min}`;
 	let time = `${hour}:${min}`;
-	if (hour >= 12) time += " PM";
-	else time += " AM";
+	time += ap;
 	time += `,${dayname}`;
 	document.querySelector("#date-time").innerText = time;
 	document.querySelector("#cur-temp").innerText = Math.round(
@@ -125,3 +116,30 @@ const daily_condition = (today_weather) => {
 		today_weather.DailyForecasts[0].Temperature.Minimum.Value
 	);
 };
+
+const set_hourly_info = (hourly_weather) => {
+	let tr="";
+	hourly_weather.forEach((item) => {
+		let date = new Date(item.DateTime);
+		let hour = date.getHours();
+		let ap;
+		if (hour >= 12) {
+			ap = ' PM';
+			hour -= 12;
+		}
+		else ap = ' AM';
+		if (hour == 0) hour += 12;
+		hour += ap;
+		let icon = item.WeatherIcon;
+		let temp = item.Temperature.Value;
+		if (icon < 10) icon = '0' + icon;
+		let td = `<div class="col s3 l1 center">
+			<p class="center">${hour}</p><br>
+			<img src="https://developer.accuweather.com/sites/default/files/${icon}-s.png"/><br>
+			<p>${temp}<sup><sup>o</sup>C</sup></p>
+			</div>
+		`
+		tr += td;
+	})
+	document.querySelector('#hourly-temp').innerHTML = tr;
+}
