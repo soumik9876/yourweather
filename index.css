@@ -1,0 +1,30 @@
+body {
+    padding-bottom: 20px;
+    background: rgb(240, 238, 238);
+}
+.muted {
+	color: rgb(247, 243, 243);
+}
+@media screen and (min-width: 601px) {
+	.res-font1 {
+		font-size: 80px;
+    }
+    .res-font2 {
+        font-size: 60px;
+    }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+	.res-font1 {
+		font-size: 45px;
+    }
+    .res-font2 {
+        font-size: 20px;
+    }
+}
+
+p {
+    margin : 0;
+    display: inline;
+}
