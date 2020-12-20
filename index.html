@@ -2,17 +2,80 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather info</title>
-    <!-- Materialize css cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Your weather</title>
+	<!-- Materialize css cdn -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="/index.css" />
 </head>
 
 <body>
-    <script type="text/javascript" src="/location.js"></script>
-    <!-- Materialize script cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<nav>
+		<div class="nav-wrapper teal" style="padding-left: 20px;">
+			<a style="font-size: 1.5rem;"><i class="material-icons left">cloud</i> Your weather</a>
+			
+		</div>
+	</nav>
+
+	<div class="today-card white-text">
+		<div class="card-panel teal">
+			<div class="row">
+				<div class="col s5">
+					<h3 class="res-font2" id="address" style="margin-top: 0">
+						Address
+					</h3>
+					<b id="date-time">date-time</b><br>
+					<p id="condition">condition</p>
+				</div>
+				<div class="col s7" style="padding: 0">
+					<span class="right">
+						<img id="w-icon" alt="weather condition" />
+						<span>
+							<h2 class="res-font1" style="display: inline;">
+								<span id="cur-temp"> temp</span>
+								<small><sup><sup>o</sup>C</sup></small>
+							</h2>
+						</span><br>
+						<p class="right">Feels like <span id="feel-temp"></span><sup><sup>o</sup>C</sup></p>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <div class="col s5" id="today-max"><p class="right"> 20 <br>Max</p> </div>
+				<div class="col s2">|</div>
+				<div class="col s5" id="today-min">20 <br>Min</div> -->
+				<div class="col l2 s6">
+					<table>
+						<tbody>
+							<tr>
+								<td><span id="mx-temp">20</span> <sup><sup>o</sup>C</sup></td>
+								<td><span id="mn-temp">20</span> <sup><sup>o</sup>C</sup></td>
+							</tr>
+							<tr>
+								<td>Max</td>
+								<td>Min</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col s6 l3 push-l7">
+					<div class="right">
+						<p>Humidity: <span id="humidity"></span>%</p>
+						<hr>
+						<p>Wind: <span id="wind"></span> km/h</p>
+						<hr>
+						<p>Precipitation: <span id="prec"></span>mm</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="/location.js"></script>
+	<!-- Materialize script cdn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
