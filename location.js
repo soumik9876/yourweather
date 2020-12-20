@@ -16,6 +16,7 @@ const success = (position) => {
 		`http://dataservice.accuweather.com/currentconditions/v1/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&details=true`,
 		false
 	);
+
 	cur_weather.send();
 	cur_weather = JSON.parse(cur_weather.responseText);
 	console.log(cur_weather);
@@ -63,7 +64,14 @@ const call_location_api = () => {
 		`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&q=${lat}%2C${long}`,
 		false
 	);
-	loc_detail.send();
+	try {
+		loc_detail.send();
+	}
+	catch {
+		console.log(loc_detail.status);
+		alert('Sorry,weather error or we have run out of api calls :( Please try again tomorrow.')
+	}
+
 	loc_detail = JSON.parse(loc_detail.responseText);
 	console.log(loc_detail);
 	document.querySelector("#address").innerText = loc_detail.EnglishName + ',' + loc_detail.Country.EnglishName;
@@ -118,7 +126,7 @@ const daily_condition = (today_weather) => {
 };
 
 const set_hourly_info = (hourly_weather) => {
-	let tr="";
+	let tr = "";
 	hourly_weather.forEach((item) => {
 		let date = new Date(item.DateTime);
 		let hour = date.getHours();
