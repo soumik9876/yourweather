@@ -13,7 +13,7 @@ const success = (position) => {
 	let cur_weather = new XMLHttpRequest();
 	cur_weather.open(
 		"GET",
-		`http://dataservice.accuweather.com/currentconditions/v1/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&details=true`,
+		`https://dataservice.accuweather.com/currentconditions/v1/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&details=true`,
 		false
 	);
 
@@ -25,7 +25,7 @@ const success = (position) => {
 	let today_weather = new XMLHttpRequest();
 	today_weather.open(
 		"GET",
-		`http://dataservice.accuweather.com/forecasts/v1/daily/1day/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&metric=true&details=true`,
+		`https://dataservice.accuweather.com/forecasts/v1/daily/1day/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&metric=true&details=true`,
 		false
 	);
 	today_weather.send();
@@ -35,7 +35,7 @@ const success = (position) => {
 	let hourly_weather = new XMLHttpRequest();
 	hourly_weather.open(
 		"GET",
-		`http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&metric=true&details=true`,
+		`https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${loc_key}?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&metric=true&details=true`,
 		false
 	);
 	hourly_weather.send();
@@ -61,7 +61,7 @@ const call_location_api = () => {
 	let loc_detail = new XMLHttpRequest();
 	loc_detail.open(
 		"GET",
-		`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&q=${lat}%2C${long}`,
+		`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=SXuRj03zWnFObfjAQHO6uHipc16iGpYF&q=${lat}%2C${long}`,
 		false
 	);
 	try {
