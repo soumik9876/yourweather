@@ -2,7 +2,7 @@ const success = (position) => {
 	// console.log(position);
 	lat = position.coords.latitude;
 	long = position.coords.longitude;
-	console.log("called geolocation", lat, long);
+	// console.log("called geolocation", lat, long);
 
 	// Get location key and city name from lat and long
 
@@ -19,7 +19,7 @@ const success = (position) => {
 
 	cur_weather.send();
 	cur_weather = JSON.parse(cur_weather.responseText);
-	console.log(cur_weather);
+	// console.log(cur_weather);
 	set_cur_condition(cur_weather);
 	// Get daily forecast from location key
 	let today_weather = new XMLHttpRequest();
@@ -30,7 +30,7 @@ const success = (position) => {
 	);
 	today_weather.send();
 	today_weather = JSON.parse(today_weather.responseText);
-	console.log(today_weather);
+	// console.log(today_weather);
 	daily_condition(today_weather);
 	let hourly_weather = new XMLHttpRequest();
 	hourly_weather.open(
@@ -40,13 +40,13 @@ const success = (position) => {
 	);
 	hourly_weather.send();
 	hourly_weather = JSON.parse(hourly_weather.responseText);
-	console.log(hourly_weather);
+	// console.log(hourly_weather);
 	set_hourly_info(hourly_weather);
 	return;
 };
 
 const error = (error) => {
-	console.log(error);
+	// console.log(error);
 };
 
 options = {
@@ -68,12 +68,12 @@ const call_location_api = () => {
 		loc_detail.send();
 	}
 	catch {
-		console.log(loc_detail.status);
+		// console.log(loc_detail.status);
 		alert('Sorry,weather error or we have run out of api calls :( Please try again tomorrow.')
 	}
 
 	loc_detail = JSON.parse(loc_detail.responseText);
-	console.log(loc_detail);
+	// console.log(loc_detail);
 	document.querySelector("#address").innerText = loc_detail.EnglishName + ',' + loc_detail.Country.EnglishName;
 	return loc_detail;
 };
